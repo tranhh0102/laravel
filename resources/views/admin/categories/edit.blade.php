@@ -24,7 +24,7 @@
                             <option value=""> Select Parent Category </option>
                             @foreach ($parentCategories as $item)
                                 <option value="{{ $item->id }}"
-                                    {{ (old('parent_id') ?? $category->parent_id) == $item->id ? 'selected' : '' }} >
+                                    {{ (old('parent_id') ?? $category->parent_id) == $item->id ? 'selected' : '' }}>
                                     {{ $item->name }}</option>
                             @endforeach
                         </select>

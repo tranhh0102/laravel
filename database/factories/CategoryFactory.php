@@ -14,11 +14,11 @@ class CategoryFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
             'name' => $this->faker->name(),
-            'parent_id'=>null,
+            'parent_id' => null,
         ];
     }
 }

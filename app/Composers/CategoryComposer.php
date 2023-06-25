@@ -36,4 +36,3 @@ class CategoryComposer
         $view->with('categories', $this->category->getParents());
     }
 }
-

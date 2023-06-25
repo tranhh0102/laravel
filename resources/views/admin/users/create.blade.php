@@ -7,8 +7,20 @@
         <div>
             <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-               
-                
+
+                <div class="row">
+                    <div class=" input-group-static col-5 mb-4">
+                        <label>Image</label>
+                        <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
+
+                        @error('image')
+                            <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-5">
+                        <img src="" id="show-image" alt="">
+                    </div>
+                </div>
 
                 <div class="input-group input-group-static mb-4">
                     <label>Name</label>

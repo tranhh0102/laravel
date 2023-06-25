@@ -12,10 +12,11 @@ class Image extends Model
         'url',
         'imageable_id',
         'imageable_type',
-        
+
     ];
+
     public function imageable()
-    {   
+    {
         return $this->morphTo();
     }
 }

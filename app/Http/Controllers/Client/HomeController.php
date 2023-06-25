@@ -8,14 +8,13 @@ use App\Models\Product;
 
 class HomeController extends Controller
 {
-
-    protected $product ;
-
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+
+    protected $product;
     public function __construct(Product $product)
     {
         $this->product = $product;
@@ -28,7 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $product = $this->product->latest('id')->paginate(10);
-        return view('clients.home.index',compact('product'));
+        $products =  $this->product->latest('id')->paginate(10);
+
+        return view('client.home.index', compact('products'));
     }
 }

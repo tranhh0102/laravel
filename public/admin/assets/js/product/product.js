@@ -1,7 +1,7 @@
 $(() => {
     ClassicEditor.create(document.querySelector("#description"), {
-            // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-        })
+        // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+    })
         .then((editor) => {
             window.editor = editor;
         })
@@ -18,7 +18,7 @@ $(() => {
     }
 
     function getSizeIndex(sizes, id) {
-        let index = _.findIndex(sizes, function(o) {
+        let index = _.findIndex(sizes, function (o) {
             return o.id == id;
         });
 
@@ -47,18 +47,18 @@ $(() => {
         $("#inputSize").val(JSON.stringify(sizes));
     }
 
-    $(document).on("click", ".btn-remove-size", function() {
+    $(document).on("click", ".btn-remove-size", function () {
         let id = $(this).data("id");
         removeSize(sizes, id);
         appendSizesToForm();
     });
 
-    $(document).on("click", ".btn-add-size", function() {
+    $(document).on("click", ".btn-add-size", function () {
         addSize();
         appendSizesToForm();
     });
 
-    $(document).on("keyup", ".input-size", function() {
+    $(document).on("keyup", ".input-size", function () {
         let id = $(this).data("id");
         let size = $(this).val();
         let index = getSizeIndex(sizes, id);
@@ -88,7 +88,7 @@ $(() => {
         $("#AddSizeModalBody").append(html);
     }
 
-    $(document).on("keyup", ".input-quantity", function() {
+    $(document).on("keyup", ".input-quantity", function () {
         let id = $(this).data("id");
         let quantity = $(this).val();
         let index = getSizeIndex(sizes, id);
@@ -101,14 +101,14 @@ $(() => {
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 $("#show-image").attr("src", e.target.result);
             };
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $("#image-input").change(function() {
+    $("#image-input").change(function () {
         readURL(this);
     });
 });

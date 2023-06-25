@@ -17,12 +17,17 @@ function confirmDelete() {
         });
     });
 }
+$.ajaxSetup({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+});
 $(() => {
-    $(document).on("click", ".btn-delete", function(e) {
+    $(document).on("click", ".btn-delete", function (e) {
         e.preventDefault();
         let id = $(this).data("id");
         confirmDelete()
-            .then(function() {
+            .then(function () {
                 $(`#form-delete${id}`).submit();
             })
             .catch();

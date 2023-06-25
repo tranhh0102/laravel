@@ -3,31 +3,39 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Products\CreateProductRequest;
+use App\Http\Requests\Products\UpdateProductRequest;
 use App\Models\Category;
-use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
 
-    protected $product;
-    protected $category;
-    public function __construct(Product $product, Category $category)
+    protected Category $category;
+    protected ProductService $productService;
+
+    public function __construct(Category $category, ProductService $productService)
     {
-        $this->product= $product;
-        $this->category= $category;
+        $this->category = $category;
+        $this->productService = $productService;
     }
+
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $products = $this->product->latest('id')->paginate(5);
-        return view('admin.products.index',compact('products'));
+        $products = $this->productService->getWithPaginate();
+
+        return view('admin.products.index', compact('products'));
     }
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -38,60 +46,66 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        $dataCreate = $request->all();
-
-        $product = $this->product->create($dataCreate);
-
-        return redirect()->route('products.index')->with(['message' => 'create new category: '. $product->name." success"]);
+        $this->productService->store($request);
+        return redirect()->route('products.index')->with(['message' => 'create product success']);
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $products = $this->product->findOrFail($id)->load(['details', 'categories']);
-        return view('admin.products.show', compact('products'));
+        $product = $this->productService->findOrFail($id)->load(['details', 'categories']);
+        return view('admin.products.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $products = $this->product->findOrFail($id)->load(['details', 'categories']);
+        $product = $this->productService->findOrFail($id)->load(['details', 'categories']);
 
         $categories = $this->category->get(['id', 'name']);
 
-        return view('admin.products.edit', compact('categories', 'products'));
+        return view('admin.products.edit', compact('categories', 'product'));
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        $dataUpdate = $request->all();
-
-        $products = $this->product->findOrFail($id);
-
-        $products->update($dataUpdate);
-
-        return redirect()->route('products.index')->with(['message' => 'Update  produ$products: '. $products->name." success"]);
+        $this->productService->update($request, $id);
+        return redirect()->route('products.index')->with(['message' => 'Update product success']);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $products = $this->product->findOrFail($id);
+        $this->productService->delete($id);
+        return redirect()->route('products.index')->with(['message' => 'Delete product success']);
 
-        $products->delete();
-
-        return redirect()->route('prodcuts.index')->with(['message' => 'Delete  products: '. $products->name." success"]);
     }
 }

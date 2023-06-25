@@ -8,7 +8,19 @@
             <form action="{{ route('products.store') }}" method="post" id="createForm" enctype="multipart/form-data">
                 @csrf
 
-                
+                <div class="row">
+                    <div class=" input-group-static col-5 mb-4">
+                        <label>Image</label>
+                        <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
+
+                        @error('image')
+                            <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-5">
+                        <img src="" id="show-image" alt="" width="300px">
+                    </div>
+                </div>
 
                 <div class="input-group input-group-static mb-4">
                     <label>Name</label>
@@ -47,20 +59,30 @@
                         <span class="text-danger"> {{ $message }}</span>
                     @enderror
                 </div>
-                <div class="input-group input-group-static mb-4">
-                    <label  name="size" class="ms-0">Select Size</label>
-                    <select  name="size" class="form-control " >
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>Xl</option>
-                        <option>XXL</option>
-                        <option>XXXL</option>
-                    
-                    </select>  
-                    @error('szie')
-                        <span class="text-danger">{{ $message}}</span>
-                    @enderror
+                <input type="hidden" id="inputSize" name='sizes'>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
+                    Add size
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="AddSizeModalLabel">Add size</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="AddSizeModalBody">
+
+                            </div>
+                            <div class="mt-3">
+                                <button type="button" class="btn  btn-primary btn-add-size">Add</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
         </div>
         <div class="input-group input-group-static mb-4">
@@ -109,7 +131,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
         integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('public/plugin/ckeditor5-build-classic/ckeditor.js') }}"></script>
+    <script src="{{ asset('plugin/ckeditor5-build-classic/ckeditor.js') }}"></script>
     <script>
         let sizes = [{
             id: Date.now(),

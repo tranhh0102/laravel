@@ -18,6 +18,8 @@ return new class extends Migration
             $table->smallInteger('sale')->default(0);
             $table->double('price');
             $table->string('size');
+            $table->string('image')->nullable();
+            $table->text('images')->nullable();
             $table->timestamps();
         });
     }
