@@ -97,7 +97,7 @@
 
 
     <!-- Footer Start -->
-    @include('clients.layouts.footer');
+    @include('clients.layouts.footer')
     <!-- Footer End -->
 
 
